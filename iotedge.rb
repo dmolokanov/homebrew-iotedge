@@ -1,8 +1,11 @@
 class Iotedge < Formula
   desc "Azure IoT Edge is an Internet of Things (IoT) service that builds on top of IoT Hub."
   homepage "https://docs.microsoft.com/en-us/azure/iot-edge/"
-  url "https://raw.githubusercontent.com/dmolokanov/iotedge-releases/master/iotedge-1.0.8-rc2.tar.gz"
-  sha256 "4caabc955b12d95123bf8df53eac7d473ac9f19f0fe0a63864aca8fcc0410287"
+  url "https://github.com/dmolokanov/iotedge.git", 
+    :using => :git,
+    :revision => "a47489b08ccb0e21a0ddf879ed073cce6e568288"
+  head "https://github.com/Azure/iotedge.git" 
+  version "1.8.0-rc3"
   depends_on "cmake" => :build
   depends_on "rust" => :build
   depends_on "openssl"
@@ -27,14 +30,16 @@ class Iotedge < Formula
     bin.install "target/release/iotedged"
     bin.install "target/release/iotedge"
     lib.install Dir["target/release/build/hsm-sys*/out/lib/*.dylib"]
-    etc.install "contrib/config/linux/config.yaml" # TODO change to macos config
-    # TODO logrotate
-    # TODO prepare to run as a service
+    (etc/name).install "contrib/config/macos/config.yaml"
     man1.install "contrib/man/man1/iotedge.1"
     man8.install "contrib/man/man8/iotedged.8"
     doc.install "contrib/docs/LICENSE"
     doc.install "contrib/docs/ThirdPartyNotices"
     doc.install "contrib/docs/trademark"
+  end
+
+  def post_install
+    (var/name).mkpath
   end
 
   test do
