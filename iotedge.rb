@@ -5,7 +5,7 @@ class Iotedge < Formula
     :using => :git,
     :revision => "a47489b08ccb0e21a0ddf879ed073cce6e568288"
   head "https://github.com/Azure/iotedge.git" 
-  version "1.8.0-rc3"
+  version "1.9.0-dev"
   depends_on "cmake" => :build
   depends_on "rust" => :build
   depends_on "openssl"
